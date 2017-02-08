@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Yet Another Coop Server</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Bungee+Inline" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" type='text/css'>
     <style>
         html,
@@ -14,14 +14,23 @@
             padding: 0;
             background: #000;
             color: #fff;
+        }
+
+        header {
+            margin-top: 5%;
+        }
+
+        .header {
             font-family: 'Press Start 2P', cursive;
         }
-        
-        .header {
-            width: 30%;
-            margin: auto;
-            margin-top: 10%;
-            text-align: center;
+
+        .header a {
+            text-decoration: none;
+            color: red;
+        }
+
+        .header a:hover, .header a.active {
+            color: darkgreen;
         }
         
         h1 {
@@ -31,19 +40,58 @@
         h5 {
             font-size: 22px;
         }
+        
+        .server-status {
+            font-family: 'Bungee Inline', cursive;
+            font-size: 24px;
+            color: darkgreen;
+        }
+
+        ul {
+            list-style: none;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="seven columns .u-pull-left">
+                    <div class="header">
+                        <h1>Yet Another Coop Server</h1>
+                        <h5>Run by <a href="https://steamcommunity.com/id/thekidwithabrain">RNR</a></h5>
+                    </div>
+                </div>
+                <div class="five columns .u-pull-right">
+                    <div class="server-status">
+                    %if data[0]: 
+                        <ul>
+                            <li>Server Status: UP</li>
+                            <li>Current map: {{data[2]['map']}}</li>
+                            <li>Players: {{data[2]['player_count']}}/{{data[2]['max_players']}}</li>
+                        </ul>   
+                    %else:
+                        <p>Server Status: Down</p>
+                    %end
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </header>
 
-    <div class="header">
-        <h1>Yet Another Coop Server</h1>
-        <h5>Run by RNR</h5>
-    </div>
-
-    <div class="server-status">
-
-    </div>
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="twelve columns">
+                    %for i in ipinfo:
+                        {{i[1]}}---{{i[0]}}
+                    % end
+                </div>
+            </div>
+        </div>
+    </article>
 
 </body>
 
