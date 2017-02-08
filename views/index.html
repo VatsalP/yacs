@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Yet Another Coop Server</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Bungee+Inline" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Bungee+Inline|Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" type='text/css'>
     <style>
         html,
@@ -39,16 +39,27 @@
         
         h5 {
             font-size: 22px;
+            font-family: 'Press Start 2P', cursive;
         }
         
         .server-status {
             font-family: 'Bungee Inline', cursive;
-            font-size: 24px;
+            font-size: 22px;
             color: darkgreen;
         }
 
         ul {
             list-style: none;
+            text-align: center;
+        }
+
+        article {
+            font-family: 'Source Sans Pro', sans-serif;
+            text-align: center;
+            margin-top: 3%;
+        }
+
+        th, td {
             text-align: center;
         }
     </style>
@@ -66,15 +77,15 @@
                 </div>
                 <div class="five columns .u-pull-right">
                     <div class="server-status">
-                    %if data[0]: 
+                    %if data[0]:
                         <ul>
                             <li>Server Status: UP</li>
-                            <li>Current map: {{data[2]['map']}}</li>
-                            <li>Players: {{data[2]['player_count']}}/{{data[2]['max_players']}}</li>
+                            <li>Current map:  ${data[2]['map']}</li>
+                            <li>Players: ${data[2]['player_count']}/${data[2]['max_players']}</li>
                         </ul>   
                     %else:
                         <p>Server Status: Down</p>
-                    %end
+                    %endif
                     </div>
                 </div>
             </div>
@@ -84,12 +95,34 @@
     <article>
         <div class="container">
             <div class="row">
-                <div class="twelve columns">
-                    %for i in ipinfo:
-                        {{i[1]}}---{{i[0]}}
-                    % end
-                </div>
-            </div>
+                <div class="six columns">
+                    <table class="u-full-width">
+                        <h5>Top ten countries by no. of visitors</h5>
+                        <thead>
+                            <tr>
+                            <th>Pos</th>
+                            <th>Country Code</th>
+                            <th>No. of Players</th>
+                            </tr>
+                        </thead>
+                        <% i = 0 %>
+                        <tbody>
+                         %for row in ipinfo:
+                            <%
+                                i += 1
+                                if i == 11:
+                                    break
+                            %>
+                            <tr>
+                            <td>${i}</td>
+                            <td>${row[0]}</td>
+                            <td>${row[1]}</td>
+                            </tr>
+                        %endfor
+                        </tbody>
+                    </table> 
+                </div> 
+            </div> 
         </div>
     </article>
 

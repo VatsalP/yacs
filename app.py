@@ -6,6 +6,7 @@ import time
 import bottle
 import valve.source.a2s
 
+from bottle import mako_template as template
 from bottle.ext import sqlite
 
 APP = bottle.Bottle()
@@ -26,13 +27,19 @@ def a2s():
     except Exception:
         return [False]
 
-@APP.route('/')
+@APP.get('/')
 def index(db):
     data = a2s()
     ipinfo = db.execute(
         "SELECT ccode, Count(*) as countrycode from ipinfo group by ccode order by countrycode desc"
         ).fetchall()
-    return bottle.template("index", data=data, ipinfo=ipinfo)
+    return template('index.html', data=data, ipinfo=ipinfo)
+
+@APP.error(404)
+def error404(error):
+    """404 page ( ͡° ͜ʖ ͡°)
+    """
+    return "What are you doing here? 乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ"
 
 if __name__ == "__main__":
     bottle.debug(True)
