@@ -8,5 +8,3 @@ git clone https://github.com/Holiverh/python-valve
 cd python-valve
 python setup.py install
 ```
-
-Live at [yacs.cf](http://yacs.cf)
